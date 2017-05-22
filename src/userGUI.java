@@ -10,13 +10,18 @@
  */
 public class userGUI extends javax.swing.JFrame {
 
+    String[] rooms = { "1 Twin Br", "2 Twin Br", "1 Full Br", "2 Full Br",
+                       "1 Queen Br", "1 King Br", "Penthouse" };
+    
+    int[] availability = new int[6];
+    
     /**
      * Creates new form userGUI
      */
     public userGUI() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,6 +38,7 @@ public class userGUI extends javax.swing.JFrame {
         lastField = new javax.swing.JTextField();
         firstField = new javax.swing.JTextField();
         reserveButton = new javax.swing.JButton();
+        outputField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,10 +56,31 @@ public class userGUI extends javax.swing.JFrame {
         });
 
         lastField.setPreferredSize(new java.awt.Dimension(90, 20));
+        lastField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastFieldActionPerformed(evt);
+            }
+        });
 
         firstField.setPreferredSize(new java.awt.Dimension(90, 20));
+        firstField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstFieldActionPerformed(evt);
+            }
+        });
 
         reserveButton.setText("Reserve");
+        reserveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reserveButtonActionPerformed(evt);
+            }
+        });
+
+        outputField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                outputFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,18 +88,19 @@ public class userGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(firstField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lastField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(availableCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(140, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(firstField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lastField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(availableCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(outputField))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(reserveButton)
                 .addContainerGap())
         );
@@ -92,7 +120,9 @@ public class userGUI extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(availableCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(reserveButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(reserveButton)
+                    .addComponent(outputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -102,6 +132,32 @@ public class userGUI extends javax.swing.JFrame {
     private void availableCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availableCmbActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_availableCmbActionPerformed
+
+    private void firstFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_firstFieldActionPerformed
+
+    private void lastFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lastFieldActionPerformed
+
+    private void reserveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveButtonActionPerformed
+        // TODO add your handling code here:
+        firstField.setText("");
+        lastField.setText("");
+        
+        int reservation = availableCmb.getSelectedIndex();
+        
+        if (availability[reservation] < 5)
+            availability[reservation]++;
+        else
+            outputField.setText("Sorry there are no more " + rooms[reservation] + " rooms available.");
+        
+    }//GEN-LAST:event_reserveButtonActionPerformed
+
+    private void outputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_outputFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,6 +201,7 @@ public class userGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField lastField;
+    private javax.swing.JTextField outputField;
     private javax.swing.JButton reserveButton;
     // End of variables declaration//GEN-END:variables
 }
